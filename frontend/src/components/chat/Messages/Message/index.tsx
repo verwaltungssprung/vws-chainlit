@@ -131,13 +131,15 @@ const Message = memo(
                   ) : (
                     // Display an assistant message
                     <div className="flex flex-col items-start min-w-[150px] flex-grow gap-2">
-                      <MessageContent
-                        ref={contentRef}
-                        elements={elements}
-                        message={message}
-                        allowHtml={allowHtml}
-                        latex={latex}
-                      />
+                      <div className="px-5 py-2.5 bg-accent rounded-3xl">
+                        <MessageContent
+                          ref={contentRef}
+                          elements={elements}
+                          message={message}
+                          allowHtml={allowHtml}
+                          latex={latex}
+                        />
+                      </div>
 
                       <AskFileButton messageId={message.id} onError={onError} />
                       <AskActionButtons
