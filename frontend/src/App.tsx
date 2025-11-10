@@ -7,6 +7,7 @@ import { router } from 'router';
 import { useAuth, useChatSession, useConfig } from '@chainlit/react-client';
 
 import ChatSettingsModal from './components/ChatSettings';
+import { FontSizeProvider } from './components/FontSizeProvider';
 import { ThemeProvider } from './components/ThemeProvider';
 import { Loader } from '@/components/Loader';
 import { Toaster } from '@/components/ui/sonner';
@@ -78,19 +79,21 @@ function App() {
       storageKey="vite-ui-theme"
       defaultTheme={data?.default_theme}
     >
-      <Toaster richColors className="toast" position="top-right" />
+      <FontSizeProvider storageKey="vite-ui-font-size" defaultSize="16">
+        <Toaster richColors className="toast" position="top-right" />
 
-      <ChatSettingsModal />
-      <RouterProvider router={router} />
+        <ChatSettingsModal />
+        <RouterProvider router={router} />
 
-      <div
-        className={cn(
-          'bg-[hsl(var(--background))] flex items-center justify-center fixed size-full p-2 top-0',
-          isReady && 'hidden'
-        )}
-      >
-        <Loader className="!size-6" />
-      </div>
+        <div
+          className={cn(
+            'bg-[hsl(var(--background))] flex items-center justify-center fixed size-full p-2 top-0',
+            isReady && 'hidden'
+          )}
+        >
+          <Loader className="!size-6" />
+        </div>
+      </FontSizeProvider>
     </ThemeProvider>
   );
 }

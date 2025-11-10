@@ -77,14 +77,22 @@ export default function UserMessage({
         )}
         <div
           className={cn(
-            'px-5 py-2.5 relative bg-accent rounded-3xl',
+            'px-5 py-2.5 relative rounded-3xl bg-accent',
             inlineElements.length ? 'rounded-tr-lg' : '',
-            isEditing ? 'w-full flex-grow' : 'max-w-[70%] flex-grow-0',
+            isEditing
+              ? 'w-full flex-grow '
+              : 'max-w-[70%] flex-grow-0 bg-blue-accent',
             editable ? '' : 'ml-auto'
           )}
         >
+          {!isEditing ? (
+            <div className="absolute -bottom-px -right-px w-4 h-4 rounded-full bg-blue-accent" />
+          ) : null}
+          {!isEditing ? (
+            <div className="absolute -bottom-1.5 -right-1.5 w-2 h-2 rounded-full bg-blue-accent" />
+          ) : null}
           {isEditing ? (
-            <div className="bg-accent flex flex-col">
+            <div className="flex flex-col">
               <AutoResizeTextarea
                 id="edit-chat-input"
                 autoFocus
