@@ -1,5 +1,5 @@
 [project]
-name = "chainlit"
+name = "vwschainlit"
 dynamic = ["version"]
 keywords = [
     "LLM",
@@ -64,7 +64,7 @@ Documentation = "https://docs.chainlit.io/"
 Repository = "https://github.com/Chainlit/chainlit"
 
 [project.scripts]
-chainlit = "chainlit.cli:cli"
+vwschainlit = "chainlit.cli:cli"
 
 [project.optional-dependencies]
 tests = [
