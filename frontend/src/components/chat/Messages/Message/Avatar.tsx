@@ -40,7 +40,7 @@ const MessageAvatar = ({ author, hide, isError }: Props) => {
       return selectedChatProfile.icon;
     }
     if (isAssistant) {
-      return '/chat-head.svg';
+      return '/public/chat-head.svg';
     }
     return apiClient?.buildEndpoint(`/avatars/${author || 'default'}`);
   }, [apiClient, selectedChatProfile, config, author]);

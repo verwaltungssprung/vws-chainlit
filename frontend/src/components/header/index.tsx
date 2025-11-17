@@ -32,7 +32,7 @@ const Header = memo(() => {
   const { config } = useConfig();
   const { open, openMobile, isMobile } = useSidebar();
   const { updateChatSettings } = useChatInteract();
-  const [isSpeakerActive, setIsSpeakerActive] = useState(true);
+  const [isSpeakerActive, setIsSpeakerActive] = useState(false);
 
   const sidebarOpen = isMobile ? openMobile : open;
 
@@ -55,7 +55,11 @@ const Header = memo(() => {
           <NewChatButton navigate={navigate} />
         )}
         <ChatProfiles navigate={navigate} />
-        <img src="/logo.svg" alt="Chainlit Logo" className="h-5 w-auto" />
+        <img
+          src="/public/logo.svg"
+          alt="Chainlit Logo"
+          className="h-5 w-auto"
+        />
       </div>
 
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -86,19 +90,18 @@ const Header = memo(() => {
               target={link.target}
             />
           ))}
-        <FontSizeToggle />
         <LanguageSwitcher />
         <CustomDropdown
           options={[
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' }
+            { label: 'Normale Sprache', value: 'normal_language' },
+            { label: 'Leichte Sprache', value: 'leichte_sprache' }
           ]}
-          defaultValue="option1"
-          onValueChange={() => {
-            // in case you need to pass this to the backend you can here.
+          defaultValue="normal_language"
+          onValueChange={(value) => {
+            updateChatSettings({ language_mode: value });
           }}
         />
+        <FontSizeToggle />
         <ThemeToggle />
         <Button
           variant="ghost"

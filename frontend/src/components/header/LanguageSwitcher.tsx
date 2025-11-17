@@ -13,15 +13,13 @@ interface Props {
 // Two languages for now
 const AVAILABLE_LANGUAGES = [
   { code: 'de-DE', label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'en-US', label: 'English', flag: '🇬🇧' }
+  { code: 'en-GB', label: 'English', flag: '🇬🇧' }
 ];
 
 export function LanguageSwitcher({ className }: Props) {
   const { i18n } = useTranslation();
   const { updateChatSettings } = useChatInteract();
-  const [currentLanguage, setCurrentLanguage] = useState(
-    i18n.language || 'en-US'
-  );
+  const [currentLanguage, setCurrentLanguage] = useState('de-DE');
 
   // Fetch translations for the selected language
   const { data: translations } = useApi<any>(
@@ -43,7 +41,7 @@ export function LanguageSwitcher({ className }: Props) {
   useEffect(() => {
     // Initialize from localStorage or browser language
     const storedLanguage = localStorage.getItem('chainlit-language');
-    const browserLanguage = navigator.language || 'en-US';
+    const browserLanguage = navigator.language || 'de-DE';
     const initialLanguage = storedLanguage || browserLanguage;
 
     // Find closest match from available languages
@@ -52,7 +50,7 @@ export function LanguageSwitcher({ className }: Props) {
       AVAILABLE_LANGUAGES.find((lang) =>
         initialLanguage.startsWith(lang.code.split('-')[0])
       )?.code ||
-      'en-US';
+      'de-DE';
 
     if (matchedLanguage !== currentLanguage) {
       setCurrentLanguage(matchedLanguage);

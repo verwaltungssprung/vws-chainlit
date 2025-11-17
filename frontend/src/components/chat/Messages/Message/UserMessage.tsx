@@ -57,7 +57,7 @@ export default function UserMessage({
   };
 
   return (
-    <div className="flex flex-col w-full gap-1">
+    <div className="flex flex-col w-full gap-1 text-background">
       <InlinedElements elements={inlineElements} className="items-end" />
 
       <div className="flex flex-row items-center gap-1 w-full group">
