@@ -81,7 +81,7 @@ export default function UserMessage({
             inlineElements.length ? 'rounded-tr-lg' : '',
             isEditing
               ? 'w-full flex-grow '
-              : 'max-w-[70%] flex-grow-0 bg-blue-accent',
+              : 'max-w-[70%] flex-grow-0 bg-blue-accent text-neutral-800',
             editable ? '' : 'ml-auto'
           )}
         >
