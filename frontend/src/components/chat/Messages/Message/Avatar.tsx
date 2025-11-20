@@ -8,6 +8,7 @@ import {
   useConfig
 } from '@chainlit/react-client';
 
+import { useTheme } from '@/components/ThemeProvider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -27,6 +28,7 @@ const MessageAvatar = ({ author, hide, isError }: Props) => {
   const apiClient = useContext(ChainlitContext);
   const { chatProfile } = useChatSession();
   const { config } = useConfig();
+  const { variant } = useTheme();
 
   const selectedChatProfile = useMemo(() => {
     return config?.chatProfiles.find((profile) => profile.name === chatProfile);
@@ -40,10 +42,11 @@ const MessageAvatar = ({ author, hide, isError }: Props) => {
       return selectedChatProfile.icon;
     }
     if (isAssistant) {
-      return '/public/chat-head.svg';
+      // Use theme-aware logo: verlogo_light.png for light theme, verlogo_dark.png for dark theme
+      return `/public/ver_chat_head_${variant}.png`;
     }
     return apiClient?.buildEndpoint(`/avatars/${author || 'default'}`);
-  }, [apiClient, selectedChatProfile, config, author]);
+  }, [apiClient, selectedChatProfile, config, author, variant]);
 
   if (isError) {
     return (

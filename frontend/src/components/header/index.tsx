@@ -10,6 +10,7 @@ import {
 
 import AudioPresence from '@/components/AudioPresence';
 import ButtonLink from '@/components/ButtonLink';
+import { useTheme } from '@/components/ThemeProvider';
 import { useSidebar } from '@/components/ui/sidebar';
 
 import { Button } from '../ui/button';
@@ -32,6 +33,7 @@ const Header = memo(() => {
   const { config } = useConfig();
   const { open, openMobile, isMobile } = useSidebar();
   const { updateChatSettings } = useChatInteract();
+  const { variant } = useTheme();
   const [isSpeakerActive, setIsSpeakerActive] = useState(false);
 
   const sidebarOpen = isMobile ? openMobile : open;
@@ -56,7 +58,7 @@ const Header = memo(() => {
         )}
         <ChatProfiles navigate={navigate} />
         <img
-          src="/public/logo.svg"
+          src={`/public/verlogo_${variant}.png`}
           alt="Chainlit Logo"
           className="h-5 w-auto"
         />
