@@ -97,18 +97,12 @@ const Header = memo(() => {
           options={[
             { label: 'Normale Sprache', value: 'normal_language' },
             { label: 'Leichte Sprache', value: 'leichte_sprache' }
-            { label: 'Normale Sprache', value: 'normal_language' },
-            { label: 'Leichte Sprache', value: 'leichte_sprache' }
           ]}
-          defaultValue="normal_language"
-          onValueChange={(value) => {
-            updateChatSettings({ language_mode: value });
           defaultValue="normal_language"
           onValueChange={(value) => {
             updateChatSettings({ language_mode: value });
           }}
         />
-        <FontSizeToggle />
         <FontSizeToggle />
         <ThemeToggle />
         <Button
