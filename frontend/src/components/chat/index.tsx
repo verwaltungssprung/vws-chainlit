@@ -1,3 +1,4 @@
+import { hasMessage } from '@/lib/utils';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
@@ -15,6 +16,7 @@ import {
 
 import Alert from '@/components/Alert';
 import { TaskList } from '@/components/Tasklist';
+import { Progress } from '@/components/ui/progress';
 import { Translator } from 'components/i18n';
 import { useTranslation } from 'components/i18n/Translator';
 
@@ -168,7 +170,7 @@ const Chat = () => {
     options: { noClick: true }
   });
 
-  const { threadId } = useChatMessages();
+  const { threadId, messages, vwsprogress } = useChatMessages();
 
   useEffect(() => {
     const currentPage = new URL(window.location.href);
@@ -211,6 +213,16 @@ const Chat = () => {
         </div>
       ) : null}
       <ErrorBoundary>
+        {vwsprogress !== undefined &&
+          vwsprogress >= 0 &&
+          hasMessage(messages) && (
+            <div
+              className="w-full mb-4 p-4 w-full mx-auto"
+              style={{ maxWidth: layoutMaxWidth }}
+            >
+              <Progress value={vwsprogress} className="h-2" showPercentage />
+            </div>
+          )}
         <ScrollContainer
           autoScrollUserMessage={config?.features?.user_message_autoscroll}
           autoScrollRef={autoScrollRef}

@@ -95,10 +95,10 @@ const Header = memo(() => {
         <LanguageSwitcher />
         <CustomDropdown
           options={[
-            { label: 'Normale Sprache', value: 'normal_language' },
+            { label: 'Allgemeine Sprache', value: 'general_language' },
             { label: 'Leichte Sprache', value: 'leichte_sprache' }
           ]}
-          defaultValue="normal_language"
+          defaultValue="general_language"
           onValueChange={(value) => {
             updateChatSettings({ language_mode: value });
           }}
