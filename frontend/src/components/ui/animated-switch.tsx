@@ -100,7 +100,7 @@ export function SwitchItem({
           disabled
             ? 'text-muted-foreground/50'
             : isActive
-            ? 'text-primary'
+            ? 'text-black dark:text-white'
             : 'text-muted-foreground'
         )}
       >

@@ -3,18 +3,21 @@ import { useRecoilValue } from 'recoil';
 import {
   currentThreadIdState,
   firstUserInteraction,
-  messagesState
+  messagesState,
+  vwsFormProgress
 } from './state';
 
 const useChatMessages = () => {
   const messages = useRecoilValue(messagesState);
   const firstInteraction = useRecoilValue(firstUserInteraction);
   const threadId = useRecoilValue(currentThreadIdState);
+  const vwsprogress = useRecoilValue(vwsFormProgress);
 
   return {
     threadId,
     messages,
-    firstInteraction
+    firstInteraction,
+    vwsprogress
   };
 };
 

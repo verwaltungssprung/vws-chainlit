@@ -31,6 +31,7 @@ import {
   tasklistState,
   threadIdToResumeState,
   tokenCountState,
+  vwsFormProgress,
   wavRecorderState,
   wavStreamPlayerState
 } from 'src/state';
@@ -82,6 +83,7 @@ const useChatSession = () => {
   const [chatProfile, setChatProfile] = useRecoilState(chatProfileState);
   const idToResume = useRecoilValue(threadIdToResumeState);
   const setThreadResumeError = useSetRecoilState(resumeThreadErrorState);
+  const setVWSProgress = useSetRecoilState(vwsFormProgress);
 
   const [currentThreadId, setCurrentThreadId] =
     useRecoilState(currentThreadIdState);
@@ -241,7 +243,9 @@ const useChatSession = () => {
       });
 
       socket.on('resume_thread', (thread: IThread) => {
-        const isReadOnlyView = Boolean((thread as any)?.metadata?.viewer_read_only);
+        const isReadOnlyView = Boolean(
+          (thread as any)?.metadata?.viewer_read_only
+        );
         if (!isReadOnlyView && idToResume && thread.id !== idToResume) {
           window.location.href = `/thread/${thread.id}`;
         }
@@ -463,6 +467,10 @@ const useChatSession = () => {
             toast(data.message);
             break;
         }
+      });
+
+      socket.on('vwsprogress', (data: number) => {
+        setVWSProgress(data);
       });
     },
     [setSession, sessionId, idToResume, chatProfile]

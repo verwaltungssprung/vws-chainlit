@@ -122,6 +122,11 @@ export const chatSettingsInputsState = atom<any>({
   default: []
 });
 
+export const vwsFormProgress = atom<number>({
+  key: 'VWSFormProgress',
+  default: undefined
+});
+
 export const chatSettingsDefaultValueSelector = selector({
   key: 'ChatSettingsValue/Default',
   get: ({ get }) => {
