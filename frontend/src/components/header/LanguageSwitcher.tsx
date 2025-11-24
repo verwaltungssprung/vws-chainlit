@@ -1,8 +1,13 @@
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRecoilValue } from 'recoil';
 
-import { useApi, useChatInteract } from '@chainlit/react-client';
+import {
+  chatSettingsValueState,
+  useApi,
+  useChatInteract
+} from '@chainlit/react-client';
 
 import { SwitchContainer, SwitchItem } from '@/components/ui/animated-switch';
 
@@ -19,6 +24,7 @@ const AVAILABLE_LANGUAGES = [
 export function LanguageSwitcher({ className }: Props) {
   const { i18n } = useTranslation();
   const { updateChatSettings } = useChatInteract();
+  const chatSettings = useRecoilValue(chatSettingsValueState);
   const [currentLanguage, setCurrentLanguage] = useState('de-DE');
 
   // Fetch translations for the selected language
@@ -57,15 +63,25 @@ export function LanguageSwitcher({ className }: Props) {
     }
   }, []);
 
+  // Listen for server-side language changes
+  useEffect(() => {
+    if (chatSettings?.language && chatSettings.language !== currentLanguage) {
+      setCurrentLanguage(chatSettings.language);
+    }
+  }, [chatSettings, currentLanguage]);
+
   const handleLanguageChange = (languageCode: string) => {
     setCurrentLanguage(languageCode);
-    // Send language selection to backend
+    // Send language selection to backend and update state immediately
     updateChatSettings({ language: languageCode });
   };
 
+  // Use chatSettings.language if available, otherwise use currentLanguage
+  const displayLanguage = chatSettings?.language || currentLanguage;
+
   return (
     <SwitchContainer
-      value={currentLanguage}
+      value={displayLanguage}
       onValueChange={handleLanguageChange}
       className={cn('h-10 w-fit', className)}
     >

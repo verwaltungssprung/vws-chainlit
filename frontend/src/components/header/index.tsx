@@ -1,7 +1,9 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import {
+  chatSettingsValueState,
   useAudio,
   useAuth,
   useChatInteract,
@@ -33,8 +35,8 @@ const Header = memo(() => {
   const { config } = useConfig();
   const { open, openMobile, isMobile } = useSidebar();
   const { updateChatSettings } = useChatInteract();
+  const chatSettings = useRecoilValue(chatSettingsValueState);
   const { variant } = useTheme();
-  const [isSpeakerActive, setIsSpeakerActive] = useState(false);
 
   const sidebarOpen = isMobile ? openMobile : open;
 
@@ -98,7 +100,7 @@ const Header = memo(() => {
             { label: 'Allgemeine Sprache', value: 'general_language' },
             { label: 'Leichte Sprache', value: 'leichte_sprache' }
           ]}
-          defaultValue="general_language"
+          value={chatSettings?.language_mode || 'general_language'}
           onValueChange={(value) => {
             updateChatSettings({ language_mode: value });
           }}
@@ -110,8 +112,9 @@ const Header = memo(() => {
           size="icon"
           className="text-muted-foreground hover:text-muted-foreground relative"
           onClick={() => {
-            const newState = !isSpeakerActive;
-            setIsSpeakerActive(newState);
+            // Toggle based on current state, defaulting to false if undefined
+            const currentState = chatSettings?.speaker_active ?? false;
+            const newState = !currentState;
             updateChatSettings({ speaker_active: newState });
           }}
         >
@@ -122,7 +125,9 @@ const Header = memo(() => {
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={isSpeakerActive ? '' : 'opacity-50'}
+              className={
+                chatSettings?.speaker_active ?? false ? '' : 'opacity-50'
+              }
             >
               <path
                 d="M18.3654 4.22258C18.7559 3.83206 19.3891 3.83206 19.7796 4.22258C21.7691 6.21209 23.0014 8.96347 23.0014 12.0008C23.0014 15.038 21.7691 17.7894 19.7796 19.7789C19.3891 20.1695 18.7559 20.1695 18.3654 19.7789C17.9749 19.3884 17.9749 18.7552 18.3654 18.3647C19.9952 16.7349 21.0014 14.4863 21.0014 12.0008C21.0014 9.5152 19.9952 7.26657 18.3654 5.63679C17.9749 5.24627 17.9749 4.61311 18.3654 4.22258Z"
@@ -145,13 +150,15 @@ const Header = memo(() => {
                 fill="currentColor"
               />
             </svg>
-            {!isSpeakerActive && (
+            {!(chatSettings?.speaker_active ?? false) && (
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28px] h-[2px] bg-muted-foreground rotate-45" />
             )}
           </div>
 
           <span className="sr-only">
-            {isSpeakerActive ? 'Speaker Active' : 'Speaker Muted'}
+            {chatSettings?.speaker_active ?? false
+              ? 'Speaker Active'
+              : 'Speaker Muted'}
           </span>
         </Button>
         <UserNav />
