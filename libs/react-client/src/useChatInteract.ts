@@ -34,6 +34,7 @@ const useChatInteract = () => {
   const resetChatSettings = useResetRecoilState(chatSettingsInputsState);
   const resetSessionId = useResetRecoilState(sessionIdState);
   const resetChatSettingsValue = useResetRecoilState(chatSettingsValueState);
+  const setChatSettingsValue = useSetRecoilState(chatSettingsValueState);
 
   const setFirstUserInteraction = useSetRecoilState(firstUserInteraction);
   const setLoading = useSetRecoilState(loadingState);
@@ -133,9 +134,15 @@ const useChatInteract = () => {
 
   const updateChatSettings = useCallback(
     (values: object) => {
+      // Optimistically update local state immediately for responsive UI
+      setChatSettingsValue((prev) => ({
+        ...prev,
+        ...values
+      }));
+      // Also send to backend
       session?.socket.emit('chat_settings_change', values);
     },
-    [session?.socket]
+    [session?.socket, setChatSettingsValue]
   );
 
   const stopTask = useCallback(() => {

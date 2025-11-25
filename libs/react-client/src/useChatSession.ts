@@ -472,6 +472,19 @@ const useChatSession = () => {
       socket.on('vwsprogress', (data: number) => {
         setVWSProgress(data);
       });
+
+      socket.on('vwssettings', (data: Record<string, any>) => {
+        // Update all settings at once
+        setChatSettingsValue((prev) => ({
+          ...prev,
+          ...data
+        }));
+
+        // Store language in localStorage for persistence if provided
+        if (data.language) {
+          localStorage.setItem('chainlit-language', data.language);
+        }
+      });
     },
     [setSession, sessionId, idToResume, chatProfile]
   );
