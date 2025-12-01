@@ -195,14 +195,18 @@ class ChainlitDataLayer(BaseDataLayer):
                 else:
                     path = f"files/{element.id}"
 
-                content_disposition = (
-                    f'attachment; filename="{element.name}"'
-                    if not (
-                        GCSStorageClient is not None
-                        and isinstance(self.storage_client, GCSStorageClient)
-                    )
-                    else None
-                )
+                # As we are using AWS cloud provider, and we are interested in keep media files inline
+                # content_disposition = (
+                #     f'attachment; filename="{element.name}"'
+                #     if not (
+                #         GCSStorageClient is not None
+                #         and isinstance(self.storage_client, GCSStorageClient)
+                #     )
+                #     else None
+                # )
+
+                content_disposition = None
+
                 await self.storage_client.upload_file(
                     object_key=path,
                     data=content,
