@@ -145,7 +145,7 @@ const Message = memo(
                   ) : (
                     // Display an assistant message
                     <div className="flex flex-col items-start min-w-[150px] flex-grow gap-2">
-                      <div className="px-5 py-2.5 bg-accent rounded-3xl">
+                      <div className="px-5 py-2.5 bg-accent rounded-3xl w-full flex flex-col">
                         <MessageContent
                           ref={contentRef}
                           elements={elements}
