@@ -1676,7 +1676,7 @@ async def get_logo(theme: Optional[Theme] = Query(Theme.light)):
             os.path.dirname(__file__),
             "frontend",
             "dist",
-            f"logo_{theme_value}.svg",
+            f"verlogo_{theme_value}.png",
         )
         logger.info("Missing custom logo. Falling back to default logo.")
 
